@@ -11,6 +11,7 @@ module Checkers
         def move(start, finish)
             positions = @pieces.invert
             piece = positions[start]
+            
             raise Checkers::Movement::PieceMissing unless piece
             raise Checkers::Movement::OutOfTurn unless piece.owned_by?(@first)
 

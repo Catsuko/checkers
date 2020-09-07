@@ -13,8 +13,16 @@ module Checkers
             other.is_a?(Piece) && other.has_id?(@id)
         end
 
-        def owned_by?(owner)
-            @owner == owner
+        def eql?(other)
+            other == self
+        end
+
+        def hash
+            @id.hash
+        end
+
+        def owned_by?(player)
+            @owner == player
         end
     end
 end

@@ -11,5 +11,13 @@ module Checkers
         def ==(other)
             other.is_a?(Player) && other.has_id?(@id)
         end
+
+        def eql?(other)
+            other == self
+        end
+
+        def hash
+            @id.hash
+        end
     end
 end
