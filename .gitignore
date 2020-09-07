@@ -3,7 +3,7 @@
 /.config
 /coverage/
 /spec/reports/
-/spec/examples.txt
+**/spec/examples.txt
 /tmp/
 /**/Gemfile.lock
 
