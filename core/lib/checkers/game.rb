@@ -2,26 +2,13 @@ require 'checkers/movement/piece_missing'
 
 module Checkers
     class Game
-        def initialize(pieces={}, first:, second:)
+        def initialize(pieces={}, turn:)
             @pieces = pieces
-            @first = first
-            @second = second
+            @turn = turn
         end
     
-        def move(start, finish)
-            positions = @pieces.invert
-            piece = positions[start]
-            
-            raise Checkers::Movement::PieceMissing unless piece
-            raise Checkers::Movement::OutOfTurn unless piece.owned_by?(@first)
-
-            Game.new(@pieces.merge({ positions[start] => finish }), first: @first, second: @second)
-        end
-
-        def position_of(piece)
-            raise ArgumentError, "#{piece} is not in the game." unless @pieces.key?(piece)
-
-            @pieces[piece]
+        def moves_for(piece)
+            raise Checkers::Movement::OutOfTurn unless piece.owned_by?(@turn.current_player)
         end
     end
 end

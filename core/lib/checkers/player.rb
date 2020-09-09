@@ -19,5 +19,9 @@ module Checkers
         def hash
             @id.hash
         end
+
+        def move(piece, game:)
+            game.moves_for(piece)
+        end
     end
 end
