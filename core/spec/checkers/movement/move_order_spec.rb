@@ -8,7 +8,7 @@ RSpec.describe Checkers::Game do
         let(:first_player) { Checkers::Player.new('Player 1') }
         let(:second_player) { Checkers::Player.new('Player 2') }
         let(:turn) { Checkers::Turn.new(turn_number, first_player: first_player, second_player: second_player) }
-        let(:game) { Checkers::Game.new(pieces, turn: turn) }
+        let(:game) { Checkers::Game.new({ piece => Checkers::Movement::Position.new(0, 0) }, turn: turn) }
 
         (1..5).each do |n|
             even_turn = n % 2 == 0

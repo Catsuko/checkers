@@ -22,7 +22,7 @@ module Checkers
 
         def move(piece, game:)
             raise Checkers::Movement::IllegalMove unless piece.owned_by?(self)
-            
+
             game.moves_for(piece)
         end
     end

@@ -9,7 +9,7 @@ RSpec.describe Checkers::Game do
         let(:turn) { Checkers::Turn.new(first_player: first_player, second_player: second_player) }
         let(:game) { Checkers::Game.new({ piece => Checkers::Movement::Position.new(0, 0) }, turn: turn) }
 
-        context "given the player tries to move their opponent's piece," do
+        context "given the piece is not on the board," do
             let(:piece) { Checkers::Piece.new('id', owner: first_player) }
             it 'an Illegal Move error is raised' do
                 expect{ second_player.move(piece, game: game) }.to raise_error(Checkers::Movement::IllegalMove)
