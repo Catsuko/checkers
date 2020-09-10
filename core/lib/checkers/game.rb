@@ -1,5 +1,3 @@
-require 'checkers/movement/piece_missing'
-
 module Checkers
     class Game
         def initialize(pieces={}, turn:)
