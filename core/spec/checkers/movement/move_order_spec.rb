@@ -3,7 +3,7 @@ require 'checkers'
 require 'checkers/movement/out_of_turn'
 
 RSpec.describe Checkers::Game do
-    describe 'when moving pieces,' do
+    describe 'when taking turns to move pieces,' do
         let(:pieces) { {} }
         let(:first_player) { Checkers::Player.new('Player 1') }
         let(:second_player) { Checkers::Player.new('Player 2') }
