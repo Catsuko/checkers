@@ -20,9 +20,24 @@ RSpec.describe Checkers::Movement::Position do
         end
     end
 
-    context 'given the coordinates are within the range of the game,' do
-        it 'a position is created' do
-            expect{ subject }.not_to raise_error
+    # TODO: Rework test so business rules are duplicated here.
+    context 'given the position is on the board,' do
+        let(:board_size) { Checkers::Movement::Position::LIMIT }
+        let(:board_coordinates) { (0...board_size.pow(2)).map{ |n| [n % board_size, n / board_size.floor] } }
+        subject { test_coordinates.map{|x, y| Checkers::Movement::Position.new(x, y) } }
+
+        context 'given the position is on a light square,' do
+            let(:test_coordinates) { board_coordinates.select{|x, y| x.even? == y.odd?} }
+    
+            include_examples 'out of bounds position'
+        end
+
+        context 'given the position is on a dark square,' do
+            let(:test_coordinates) { board_coordinates.select{|x, y| x.even? == y.even?} }
+
+            it 'no errors are raised' do
+                expect{ subject }.not_to raise_error
+            end
         end
     end
 

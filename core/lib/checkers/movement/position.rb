@@ -6,7 +6,7 @@ module Checkers
             LIMIT = 8
 
             def initialize(x, y)
-                raise OutOfBounds unless in_bounds?(x, y)
+                raise OutOfBounds.new(x: x, y: y) unless in_bounds?(x, y) && dark_square?(x, y)
                 @x = x
                 @y = y
             end
@@ -43,6 +43,10 @@ module Checkers
 
             def in_bounds?(x, y)
                 x >= 0 && y >= 0 && x < LIMIT && y < LIMIT
+            end
+
+            def dark_square?(x, y)
+                x.even? == y.even?
             end
         end
     end
