@@ -3,8 +3,6 @@ module Checkers
     class Moves
       include Enumerable
 
-      delegate :each, to: :@directions
-
       def initialize(directions, piece:, game:)
         @directions = directions
         @piece = piece
@@ -14,6 +12,14 @@ module Checkers
       def towards(direction)
         # move piece in direction, piece decides if this is valid or not.
         # returns instance of game with moved piece
+      end
+
+      def each(&block)
+        if block_given?
+          @directions.each(&block)
+        else
+          @directions.each
+        end
       end
     end
   end

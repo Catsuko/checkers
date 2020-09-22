@@ -39,6 +39,22 @@ module Checkers
         self == other
       end
 
+      def top_left
+        Position.new(@x.pred, @y.succ)
+      end
+
+      def top_right
+        Position.new(@x.succ, @y.succ)
+      end
+
+      def left_edge?
+        @x.zero?
+      end
+
+      def right_edge?
+        @x == LIMIT - 1
+      end
+
       private
 
       def in_bounds?(x, y)
