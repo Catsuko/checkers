@@ -7,8 +7,13 @@ module Checkers
 
    def moves_from(position)
       [].tap do |moves|
-        moves << position.top_left unless position.left_edge?
-        moves << position.top_right unless position.right_edge?
+        if @light
+          moves << position.bottom_left unless position.left_edge?
+          moves << position.bottom_right unless position.right_edge?
+        else
+          moves << position.top_left unless position.left_edge?
+          moves << position.top_right unless position.right_edge?
+        end
       end       
     end
     

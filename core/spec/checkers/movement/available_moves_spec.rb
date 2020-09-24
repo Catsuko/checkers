@@ -23,7 +23,7 @@ RSpec.describe Checkers::Game do
       let(:piece) { Checkers::Piece.new('id', light: false) }
       subject { game.moves_for(piece) }
 
-      context 'and away from the edge,' do
+      context 'that is away from the edge,' do
         let(:position) { Checkers::Movement::Position.new(3, 3) }
         
         it 'the piece can move to the 2 adjacent positions above' do
@@ -34,28 +34,58 @@ RSpec.describe Checkers::Game do
         end
       end
 
-      context 'and is on the left edge,' do
+      context 'that is on the left edge,' do
         let(:position) { Checkers::Movement::Position.new(0, 2) }
   
-        it 'the piece can move to the 2 adjacent positions above' do
+        it 'the piece can only move up and away from the edge' do
           expect(subject).to contain_exactly(
             Checkers::Movement::Position.new(1, 3)
           )
         end
       end
+      
+      context 'that is on the right edge,' do
+        let(:position) { Checkers::Movement::Position.new(7, 3) }
+  
+        it 'the piece can only move up and away from the edge' do
+          expect(subject).to contain_exactly(
+            Checkers::Movement::Position.new(6, 4)
+          )
+        end
+      end
     end
 
-    context 'given a dark piece,' do
+    context 'given a light piece,' do
       let(:piece) { Checkers::Piece.new('id', light: true) }
       subject { game.moves_for(piece) }
 
-      context 'and is away from the edge,' do
+      context 'that is away from the edge,' do
         let(:position) { Checkers::Movement::Position.new(3, 3) }
 
         it 'the piece can move to the 2 adjacent positions below' do
           expect(subject).to contain_exactly(
             Checkers::Movement::Position.new(2, 2),
             Checkers::Movement::Position.new(4, 2)
+          )
+        end
+      end
+
+      context 'that is on the left edge,' do
+        let(:position) { Checkers::Movement::Position.new(0, 2) }
+  
+        it 'the piece can only move down and away from the edge' do
+          expect(subject).to contain_exactly(
+            Checkers::Movement::Position.new(1, 1)
+          )
+        end
+      end
+      
+      context 'that is on the right edge,' do
+        let(:position) { Checkers::Movement::Position.new(7, 3) }
+  
+        it 'the piece can only move down and away from the edge' do
+          expect(subject).to contain_exactly(
+            Checkers::Movement::Position.new(6, 2)
           )
         end
       end

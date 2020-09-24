@@ -47,6 +47,14 @@ module Checkers
         Position.new(@x.succ, @y.succ)
       end
 
+      def bottom_left
+        Position.new(@x.pred, @y.pred)
+      end
+
+      def bottom_right
+        Position.new(@x.succ, @y.pred)
+      end
+
       def left_edge?
         @x.zero?
       end
