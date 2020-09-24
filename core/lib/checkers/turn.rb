@@ -9,11 +9,19 @@ module Checkers
     end
 
     def current_player
-      @number % 2 == 0 ? @second_player : @first_player
+      even? ? @second_player : @first_player
     end
 
     def waiting_player
       current_player == @first_player ? @second_player : @first_player
+    end
+
+    def next
+      Turn.new(@number.next, first_player: @first_player, second_player: @second_player)
+    end
+
+    def even?
+      @number % 2 == 0
     end
   end
 end

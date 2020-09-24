@@ -3,7 +3,7 @@ require 'checkers'
 require 'checkers/movement/illegal_move'
 
 RSpec.describe Checkers::Game do
-  describe 'when moving pieces,' do
+  describe 'when getting the available moves for a piece,' do
     let(:first_player) { Checkers::Player.new('Player 1') }
     let(:second_player) { Checkers::Player.new('Player 2') }
     let(:turn) { Checkers::Turn.new(first_player: first_player, second_player: second_player) }
@@ -12,16 +12,16 @@ RSpec.describe Checkers::Game do
 
     context 'given the piece is not on the board,' do
       let(:pieces) { {} }
-      let(:piece) { Checkers::Piece.new('id', owner: first_player) }
+      let(:piece) { Checkers::Piece.new('id', light: false) }
 
-      it 'an Illegal Move error is raised' do
-        expect{ first_player.move(piece, game: game) }.to raise_error(Checkers::Movement::IllegalMove)
+      it 'there are no moves' do
+        expect(game.moves_for(piece)).to be_none
       end
     end
 
-    context 'given the piece is owned by the first player,' do
-      let(:piece) { Checkers::Piece.new('id', owner: first_player) }
-      subject { first_player.move(piece, game: game) }
+    context 'given a dark piece,' do
+      let(:piece) { Checkers::Piece.new('id', light: false) }
+      subject { game.moves_for(piece) }
 
       context 'and away from the edge,' do
         let(:position) { Checkers::Movement::Position.new(3, 3) }
@@ -45,10 +45,9 @@ RSpec.describe Checkers::Game do
       end
     end
 
-    context 'given the piece is owned by the second player,' do
-      let(:turn) { Checkers::Turn.new(2, first_player: first_player, second_player: second_player) }
-      let(:piece) { Checkers::Piece.new('id', owner: second_player) }
-      subject { second_player.move(piece, game: game) }
+    context 'given a dark piece,' do
+      let(:piece) { Checkers::Piece.new('id', light: true) }
+      subject { game.moves_for(piece) }
 
       context 'and is away from the edge,' do
         let(:position) { Checkers::Movement::Position.new(3, 3) }

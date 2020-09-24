@@ -2,28 +2,39 @@ require 'spec_helper'
 require 'checkers'
 
 RSpec.describe Checkers::Piece do
-  describe 'when checking piece ownership,' do
-    %i[player_a player_b].each do |sym|
-      let(sym) { Checkers::Player.new(sym.to_s) }
+  describe 'when checking if the piece can move on given turn,' do
+    let(:piece) { Checkers::Piece.new(1, light: is_light) }
+    let(:even_turn) { Checkers::Turn.new(2, first_player: nil, second_player: nil) }
+
+    context 'given a light piece,' do
+      let(:is_light) { true } 
+
+      it 'the piece can move on even turns' do
+        expect(piece.own?(even_turn)).to be true
+      end
+
+      it 'the piece cannot move on odd turns' do
+        expect(piece.own?(even_turn.next)).to be false
+      end
     end
-    
-    context 'given the player owns the piece' do
-      subject { Checkers::Piece.new(1, owner: player_a).owned_by?(player_a) }
 
-      it { is_expected.to be true }
-    end
+    context 'given a dark piece,' do
+      let(:is_light) { false }
+      
+      it 'the piece cannot move on even turns' do
+        expect(piece.own?(even_turn)).to be false
+      end
 
-    context 'given the player does not own the piece' do
-      subject { Checkers::Piece.new(1, owner: player_a).owned_by?(player_b) }
-
-      it { is_expected.to be false }
+      it 'the piece can move on odd turns' do
+        expect(piece.own?(even_turn.next)).to be true
+      end
     end
   end
 
   describe 'when checking equality,' do
     context 'given two pieces with the same id,' do
-      let(:a) { Checkers::Piece.new('same', owner: Checkers::Player.new('player')) }
-      let(:b) { Checkers::Piece.new('same', owner: Checkers::Player.new('player')) }
+      let(:a) { Checkers::Piece.new('same', light: true) }
+      let(:b) { Checkers::Piece.new('same', light: true) }
   
       it 'they are considered equal using ==' do
         expect(a == b).to be true
