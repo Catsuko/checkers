@@ -16,8 +16,12 @@ module Checkers
     end
 
     def moves_for(piece)
-      moves = @pieces.key?(piece) ? piece.moves_from(@pieces[piece]) : []
-      Checkers::Movement::Moves.new(moves, piece: piece, game: self)
+      moves = @pieces.key?(piece) ? piece.moves_from(@pieces[piece], game: self) : []
+      Checkers::Movement::Moves.new(moves)
+    end
+
+    def space_occupied?(position)
+      @pieces.invert.key?(position)
     end
   end 
 end

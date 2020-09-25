@@ -5,7 +5,7 @@ module Checkers
       @light = light
     end
 
-   def moves_from(position)
+   def moves_from(position, game:)
       [].tap do |moves|
         if @light
           moves << position.bottom_left unless position.left_edge?
@@ -14,7 +14,9 @@ module Checkers
           moves << position.top_left unless position.left_edge?
           moves << position.top_right unless position.right_edge?
         end
-      end       
+        
+        moves.reject!{ |move| game.space_occupied?(move) }
+      end  
     end
     
     def has_id?(id)

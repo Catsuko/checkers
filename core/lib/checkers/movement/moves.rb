@@ -3,23 +3,20 @@ module Checkers
     class Moves
       include Enumerable
 
-      def initialize(directions, piece:, game:)
-        @directions = directions
-        @piece = piece
-        @game = game
-      end
-
-      def towards(direction)
-        # move piece in direction, piece decides if this is valid or not.
-        # returns instance of game with moved piece
+      def initialize(positions)
+        @positions = positions
       end
 
       def each(&block)
         if block_given?
-          @directions.each(&block)
+          @positions.each(&block)
         else
-          @directions.each
+          @positions.each
         end
+      end
+
+      def inspect
+        @positions.inspect
       end
     end
   end
