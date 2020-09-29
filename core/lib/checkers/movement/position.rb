@@ -63,6 +63,40 @@ module Checkers
         @x == LIMIT - 1
       end
 
+      def above?(position)
+        position.evaluate_y{ |y| y < @y }
+      end
+
+      def below?(position)
+        position.evaluate_y{ |y| y > @y }
+      end
+
+      def left_of?(position)
+        position.evaluate_x{ |x| x > @x }
+      end
+
+      def right_of?(position)
+        position.evaluate_x{ |x| x < @x }
+      end
+
+      def next_to?(position)
+        x_distance = position.evaluate_x{ |x| x - @x }.abs
+        y_distance = position.evaluate_y{ |y| y - @y }.abs
+        x_distance + y_distance > 0 && x_distance <= 1 && y_distance <= 1
+      end
+
+      def distance_from(position)
+        position.evaluate_x{ |x| x - @x }.abs + position.evaluate_y{ |y| y - @y }.abs
+      end
+
+      def evaluate_x(&block)
+        yield(@x)
+      end
+
+      def evaluate_y(&block)
+        yield(@y)
+      end
+
       private
 
       def in_bounds?(x, y)
