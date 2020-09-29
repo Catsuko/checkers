@@ -1,16 +1,12 @@
 require 'spec_helper'
 require 'support/matchers/positions'
+require 'support/shared_contexts/game_context'
 require 'checkers'
 require 'checkers/movement/illegal_move'
 
 RSpec.describe Checkers::Game do
   describe 'when getting the available moves for a piece,' do
-    let(:first_player) { Checkers::Player.new('Player 1') }
-    let(:second_player) { Checkers::Player.new('Player 2') }
-    let(:turn) { Checkers::Turn.new(first_player: first_player, second_player: second_player) }
-    let(:pieces) { { piece => position, **other_pieces } }
-    let(:other_pieces) { {} }
-    let(:game) { Checkers::Game.new(pieces, turn: turn) }
+    include_context('game')
 
     context 'given the piece is not on the board,' do
       let(:pieces) { {} }
