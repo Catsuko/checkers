@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'support/matchers/positions'
 require 'support/shared_contexts/game_context'
 require 'checkers'
 require 'checkers/movement/illegal_move'
