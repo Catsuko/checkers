@@ -6,17 +6,18 @@ module Checkers
     end
 
    def moves_from(position, game:)
-      [].tap do |moves|
+      Enumerator.new do |moves|
         if @light
-          moves << position.bottom_left unless position.left_edge?
-          moves << position.bottom_right unless position.right_edge?
+          moves << position.bottom_left unless position.left_edge? || game.space_occupied?(position.bottom_left)
+          moves << position.bottom_right unless position.right_edge? || game.space_occupied?(position.bottom_right)
         else
-          moves << position.top_left unless position.left_edge?
-          moves << position.top_right unless position.right_edge?
+          moves << position.top_left unless position.left_edge? || game.space_occupied?(position.top_left)
+          moves << position.top_right unless position.right_edge? || game.space_occupied?(position.top_right) do |piece|
+            potential_jump = position.top_right.top_right
+            moves << potential_jump unless game.space_occupied?(potential_jump)
+          end
         end
-        
-        moves.reject!{ |move| game.space_occupied?(move) }
-      end  
+      end
     end
     
     def has_id?(id)
@@ -33,6 +34,14 @@ module Checkers
 
     def hash
       @id.hash
+    end
+
+    def friendly?(other)
+      light? == other.light?
+    end
+
+    def light?
+      @light
     end
 
     def own?(turn)

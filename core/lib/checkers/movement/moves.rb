@@ -20,11 +20,11 @@ module Checkers
       end
 
       def many?
-        @positions.size > 1
+        @positions.count > 1
       end
 
       def singular?
-        @positions.size == 1
+        @positions.count == 1
       end
     end
   end

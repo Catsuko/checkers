@@ -21,7 +21,10 @@ module Checkers
     end
 
     def space_occupied?(position)
-      @pieces.invert.key?(position)
+      positions = @pieces.invert
+      positions.key?(position).tap do |is_occupied|
+        yield(positions.fetch(position)) if block_given? && is_occupied
+      end
     end
   end 
 end
