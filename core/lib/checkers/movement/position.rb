@@ -55,6 +55,14 @@ module Checkers
         Position.new(@x.succ, @y.pred)
       end
 
+      def top_edge?
+        @y == LIMIT - 1
+      end
+
+      def bottom_edge?
+        @y.zero?
+      end
+      
       def left_edge?
         @x.zero?
       end

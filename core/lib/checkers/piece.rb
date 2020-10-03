@@ -53,12 +53,18 @@ module Checkers
       game.space_occupied?(position.send(right_direction)) do |piece|
         potential_jump = position.send(right_direction).send(right_direction)
         yield potential_jump unless game.space_occupied?(potential_jump)
-      end unless position.right_edge? || position.send(right_direction).right_edge?
+      end unless position.right_edge? || 
+                 position.send(right_direction).right_edge? || 
+                 position.send(right_direction).top_edge? || 
+                 position.send(right_direction).bottom_edge?
       
       game.space_occupied?(position.send(left_direction)) do |piece|
         potential_jump = position.send(left_direction).send(left_direction)
         yield potential_jump unless game.space_occupied?(potential_jump)
-      end unless position.left_edge? || position.send(left_direction).left_edge?
+      end unless position.left_edge? || 
+                 position.send(left_direction).left_edge? ||
+                 position.send(left_direction).top_edge? ||
+                 position.send(left_direction).bottom_edge?
     end
 
     def regular_moves(position, game:)

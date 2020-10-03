@@ -30,6 +30,13 @@ RSpec.describe Checkers::Game do
 
         it { is_expected.to all(be_left_of(position)) }
       end
+      
+      context 'with a diagonally adjacent light piece that is on the top edge,' do
+        let(:position) { Checkers::Movement::Position.new(0, 6) }
+        let(:other_pieces) { { Checkers::Piece.new('light', light: true) => position.top_right } }
+
+        it { is_expected.not_to be_any }
+      end
     end
     context 'given a light piece,' do
       let(:piece) { Checkers::Piece.new('light', light: true) }
@@ -54,6 +61,13 @@ RSpec.describe Checkers::Game do
         let(:other_pieces) { { Checkers::Piece.new('dark', light: false) => position.bottom_right } }
 
         it { is_expected.to all(be_left_of(position)) }
+      end
+
+      context 'with a diagonally adjacent dark piece that is on the bottom edge,' do
+        let(:position) { Checkers::Movement::Position.new(7, 1) }
+        let(:other_pieces) { { Checkers::Piece.new('dark', light: false) => position.bottom_left } }
+
+        it { is_expected.not_to be_any }
       end
     end
   end
