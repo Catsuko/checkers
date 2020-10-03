@@ -10,17 +10,50 @@ RSpec.describe Checkers::Game do
       let(:piece) { Checkers::Piece.new('dark', light: false) }
       subject { game.moves_for(piece) }
 
-      context 'with a jumpable light piece diagonally adjacent,' do
+      context 'with a diagonally adjacent light piece that has a vacant space behind,' do
         let(:other_pieces) { { Checkers::Piece.new('light', light: true) => position.top_right } }
-        let(:position) { Checkers::Movement::Position.new(2, 0) }
+        let(:position) { Checkers::Movement::Position.new(2, 2) }
         
         it { is_expected.to contain_exactly(position.top_right.top_right) }
+      end
 
-        context 'and the piece is next to the edge,' do
-          let(:position) { Checkers::Movement::Position.new(0, 0) }
+      context 'with a diagonally adjacent light piece that is on the left edge,' do
+        let(:position) { Checkers::Movement::Position.new(1, 1) }
+        let(:other_pieces) { { Checkers::Piece.new('light', light: true) => position.top_left } }
 
-          it { is_expected.to contain_exactly(position.top_right.top_right) }
-        end
+        it { is_expected.to all(be_right_of(position)) }
+      end
+
+      context 'with a diagonally adjacent light piece that is on the right edge,' do
+        let(:position) { Checkers::Movement::Position.new(6, 0) }
+        let(:other_pieces) { { Checkers::Piece.new('light', light: true) => position.top_right } }
+
+        it { is_expected.to all(be_left_of(position)) }
+      end
+    end
+    context 'given a light piece,' do
+      let(:piece) { Checkers::Piece.new('light', light: true) }
+      subject { game.moves_for(piece) }
+
+      context 'with a diagonally adjacent dark piece that has a vacant space behind,' do
+        let(:other_pieces) { { Checkers::Piece.new('dark', light: false) => position.bottom_right } }
+        let(:position) { Checkers::Movement::Position.new(2, 2) }
+        
+        it { is_expected.to contain_exactly(position.bottom_right.bottom_right) }
+      end
+
+      context 'with a diagonally adjacent dark piece that is on the left edge,' do
+        let(:position) { Checkers::Movement::Position.new(1, 3) }
+        let(:other_pieces) { { Checkers::Piece.new('dark', light: false) => position.bottom_left } }
+
+        it { is_expected.to all(be_right_of(position)) }
+      end
+
+      context 'with a diagonally adjacent dark piece that is on the right edge,' do
+        let(:position) { Checkers::Movement::Position.new(6, 2) }
+        let(:other_pieces) { { Checkers::Piece.new('dark', light: false) => position.bottom_right } }
+
+        it { is_expected.to all(be_left_of(position)) }
       end
     end
   end
