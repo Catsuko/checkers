@@ -51,7 +51,7 @@ RSpec.describe Checkers::Game do
   
         it { is_expected.to be_singular }
       end
-      
+
       context 'that is on the right edge,' do
         let(:position) { Checkers::Movement::Position.new(7, 3) }
 

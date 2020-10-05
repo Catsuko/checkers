@@ -17,6 +17,13 @@ RSpec.describe Checkers::Game do
         it { is_expected.to contain_exactly(position.top_right.top_right) }
       end
 
+      context 'with a diagonally adjacent dark piece that has a vacant space behind,' do
+        let(:other_pieces) { { Checkers::Piece.new('dark2', light: false) => position.top_right } }
+        let(:position) { Checkers::Movement::Position.new(2, 2) }
+
+        it { is_expected.to all(be_left_of(position)) }
+      end
+
       context 'with a diagonally adjacent light piece that is on the left edge,' do
         let(:position) { Checkers::Movement::Position.new(1, 1) }
         let(:other_pieces) { { Checkers::Piece.new('light', light: true) => position.top_left } }
@@ -47,6 +54,13 @@ RSpec.describe Checkers::Game do
         let(:position) { Checkers::Movement::Position.new(2, 2) }
         
         it { is_expected.to contain_exactly(position.bottom_right.bottom_right) }
+      end
+
+      context 'with a diagonally adjacent light piece that has a vacant space behind,' do
+        let(:other_pieces) { { Checkers::Piece.new('light2', light: true) => position.bottom_right } }
+        let(:position) { Checkers::Movement::Position.new(2, 2) }
+
+        it { is_expected.to all(be_left_of(position)) }
       end
 
       context 'with a diagonally adjacent dark piece that is on the left edge,' do

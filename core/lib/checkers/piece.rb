@@ -5,7 +5,7 @@ module Checkers
       @light = light
     end
 
-   def moves_from(position, game:)
+    def moves_from(position, game:)
       jumps_exist = false
       Enumerator.new do |moves|
         jump_moves(position, game: game) do |jump|
@@ -52,7 +52,7 @@ module Checkers
     def jump_moves(position, game:)
       game.space_occupied?(position.send(right_direction)) do |piece|
         potential_jump = position.send(right_direction).send(right_direction)
-        yield potential_jump unless game.space_occupied?(potential_jump)
+        yield potential_jump unless game.space_occupied?(potential_jump) || piece.friendly?(self)
       end unless position.right_edge? || 
                  position.send(right_direction).right_edge? || 
                  position.send(right_direction).top_edge? || 
@@ -60,7 +60,7 @@ module Checkers
       
       game.space_occupied?(position.send(left_direction)) do |piece|
         potential_jump = position.send(left_direction).send(left_direction)
-        yield potential_jump unless game.space_occupied?(potential_jump)
+        yield potential_jump unless game.space_occupied?(potential_jump) || piece.friendly?(self)
       end unless position.left_edge? || 
                  position.send(left_direction).left_edge? ||
                  position.send(left_direction).top_edge? ||
