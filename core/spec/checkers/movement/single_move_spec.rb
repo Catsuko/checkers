@@ -8,11 +8,10 @@ RSpec.describe Checkers::Game do
     include_context('game')
 
     context 'given the piece is not on the board,' do
-      let(:pieces) { {} }
-      let(:piece) { Checkers::Piece.new('id', light: false) }
+      let(:missing_piece) { Checkers::Piece.new('id', light: false) }
 
       it 'there are no moves' do
-        expect(game.moves_for(piece)).to be_none
+        expect(game.moves_for(missing_piece)).to be_none
       end
     end
 
@@ -29,18 +28,14 @@ RSpec.describe Checkers::Game do
 
         context 'with a friendly piece blocking the left space,' do
           let(:blocked_position) { Checkers::Movement::Position.new(2, 4) }
-          let(:other_pieces) { {
-            Checkers::Piece.new('id2', light: false) => blocked_position
-          } }
+          let(:dark_pieces) { blocked_position }
 
           it { is_expected.not_to include(blocked_position) }
         end
 
         context 'with a friendly piece blocking the right space,' do
           let(:blocked_position) { Checkers::Movement::Position.new(4, 4) }
-          let(:other_pieces) { {
-            Checkers::Piece.new('id2', light: false) => blocked_position
-          } }
+          let(:dark_pieces) { blocked_position }
           
           it { is_expected.not_to include(blocked_position) }
         end
@@ -72,18 +67,14 @@ RSpec.describe Checkers::Game do
 
         context 'with a friendly piece blocking the left space,' do
           let(:blocked_position) { Checkers::Movement::Position.new(2, 2) }
-          let(:other_pieces) { {
-            Checkers::Piece.new('id2', light: true) => blocked_position
-          } }
+          let(:light_pieces) { blocked_position }
 
           it { is_expected.not_to include(blocked_position) }
         end
 
         context 'with a friendly piece blocking the right space,' do
           let(:blocked_position) { Checkers::Movement::Position.new(4, 2) }
-          let(:other_pieces) { {
-            Checkers::Piece.new('id2', light: true) => blocked_position
-          } }
+          let(:light_pieces) { blocked_position }
 
           it { is_expected.not_to include(blocked_position) }
         end

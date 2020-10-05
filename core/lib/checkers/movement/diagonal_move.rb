@@ -8,6 +8,7 @@ module Checkers
 
       def jumps_for(piece, position:, game:)
         return unless room_to_jump?(position)
+        
         game.space_occupied?(continue_from(position)) do |other_piece|
           potential_jump = continue_from(position, count: 2)
           yield potential_jump unless game.space_occupied?(potential_jump) || other_piece.friendly?(piece)
