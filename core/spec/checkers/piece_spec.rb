@@ -3,7 +3,7 @@ require 'checkers'
 
 RSpec.describe Checkers::Piece do
   describe 'when checking if the piece can move on given turn,' do
-    let(:piece) { Checkers::Piece.new(1, light: is_light) }
+    let(:piece) { Checkers::Piece.regular(1, light: is_light) }
     let(:even_turn) { Checkers::Turn.new(2, first_player: nil, second_player: nil) }
 
     context 'given a light piece,' do
@@ -33,8 +33,8 @@ RSpec.describe Checkers::Piece do
 
   describe 'when checking equality,' do
     context 'given two pieces with the same id,' do
-      let(:a) { Checkers::Piece.new('same', light: true) }
-      let(:b) { Checkers::Piece.new('same', light: true) }
+      let(:a) { Checkers::Piece.regular('same', light: true) }
+      let(:b) { Checkers::Piece.regular('same', light: true) }
   
       it 'they are considered equal using ==' do
         expect(a == b).to be true

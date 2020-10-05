@@ -3,14 +3,21 @@ require_relative './movement/composite_move'
 
 module Checkers
   class Piece
-    def initialize(id, light:)
+    def initialize(id, light:, movement:)
       @id = id
       @light = light
-      # TODO: Refactor out of constructor and inject movement into piece.
-      @movement = Checkers::Movement::CompositeMove.new([
-        Checkers::Movement::DiagonalMove.new(x_dir: :left, y_dir: light ? :bottom : :top),
-        Checkers::Movement::DiagonalMove.new(x_dir: :right, y_dir: light ? :bottom : :top)
-      ])
+      @movement = movement
+    end
+
+    # TODO: Don't like this method, refactor into a factory so movement rules can be cached
+    def self.regular(id, light:)
+      Piece.new(
+        id, 
+        light: light,
+        movement: Checkers::Movement::CompositeMove.new([
+          Checkers::Movement::DiagonalMove.new(x_dir: :left, y_dir: light ? :bottom : :top),
+          Checkers::Movement::DiagonalMove.new(x_dir: :right, y_dir: light ? :bottom : :top)
+        ]))
     end
 
     def moves_from(position, game:)
