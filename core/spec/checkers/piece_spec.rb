@@ -1,13 +1,15 @@
 require 'spec_helper'
 require 'checkers'
+require 'checkers/piece_factory'
 
 RSpec.describe Checkers::Piece do
+  let(:piece_factory) { Checkers::PieceFactory.new }
+
   describe 'when checking if the piece can move on given turn,' do
-    let(:piece) { Checkers::Piece.regular(1, light: is_light) }
     let(:even_turn) { Checkers::Turn.new(2, first_player: nil, second_player: nil) }
 
     context 'given a light piece,' do
-      let(:is_light) { true } 
+      let(:piece) { piece_factory.create_light_piece(1) }
 
       it 'the piece can move on even turns' do
         expect(piece.own?(even_turn)).to be true
@@ -19,7 +21,7 @@ RSpec.describe Checkers::Piece do
     end
 
     context 'given a dark piece,' do
-      let(:is_light) { false }
+      let(:piece) { piece_factory.create_dark_piece(1) }
       
       it 'the piece cannot move on even turns' do
         expect(piece.own?(even_turn)).to be false
@@ -33,8 +35,8 @@ RSpec.describe Checkers::Piece do
 
   describe 'when checking equality,' do
     context 'given two pieces with the same id,' do
-      let(:a) { Checkers::Piece.regular('same', light: true) }
-      let(:b) { Checkers::Piece.regular('same', light: true) }
+      let(:a) { piece_factory.create_light_piece('same') }
+      let(:b) { piece_factory.create_light_piece('same') }
   
       it 'they are considered equal using ==' do
         expect(a == b).to be true
