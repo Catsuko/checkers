@@ -9,16 +9,19 @@ module Checkers
       @movement = movement
     end
 
-    def moves_from(position, game:)
-      jumps_exist = false
-      Enumerator.new do |moves|
+    def jumps_from(position, game:)
+      Enumerator.new do |jumps|
         @movement.jumps_for(self, position: position, game: game) do |jump|
-          moves << jump
-          jumps_exist = true
+          jumps << jump
         end
+      end
+    end
+
+    def moves_from(position, game:)
+      Enumerator.new do |moves|
         @movement.from(position, game: game) do |move|
           moves << move
-        end unless jumps_exist
+        end
       end
     end
 

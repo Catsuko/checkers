@@ -17,7 +17,7 @@ RSpec.shared_context 'game' do
       pieces.store(piece_factory.create_light_piece(i.next), pos)
     end
     [dark_pieces].flatten.each_with_index do |pos, i|
-      pieces.store(piece_factory.create_dark_piece(i.next), pos)
+      pieces.store(piece_factory.create_dark_piece(-i.next), pos)
     end
     Checkers::Game.new(pieces, turn: turn)
   end
