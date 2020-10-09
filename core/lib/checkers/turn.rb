@@ -23,5 +23,9 @@ module Checkers
     def even?
       @number % 2 == 0
     end
+    
+    def inspect
+      "<Turn #{@number}>"
+    end
   end
 end
