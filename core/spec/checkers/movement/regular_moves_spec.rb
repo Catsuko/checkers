@@ -20,21 +20,21 @@ RSpec.describe Checkers::Game do
       subject { game.moves_for(target_piece) }
 
       context 'that is away from the edge,' do
-        let(:target_piece_position) { Checkers::Movement::Position.new(3, 3) }
+        let(:target_piece_position) { Checkers::Position.new(3, 3) }
        
         it { is_expected.to all(be_above(target_piece_position)) }
         it { is_expected.to all(be_next_to(target_piece_position)) }
         it { is_expected.to be_many }
 
         context 'with a friendly piece blocking the left space,' do
-          let(:blocked_position) { Checkers::Movement::Position.new(2, 4) }
+          let(:blocked_position) { Checkers::Position.new(2, 4) }
           let(:dark_pieces) { blocked_position }
 
           it { is_expected.not_to include(blocked_position) }
         end
 
         context 'with a friendly piece blocking the right space,' do
-          let(:blocked_position) { Checkers::Movement::Position.new(4, 4) }
+          let(:blocked_position) { Checkers::Position.new(4, 4) }
           let(:dark_pieces) { blocked_position }
           
           it { is_expected.not_to include(blocked_position) }
@@ -42,13 +42,13 @@ RSpec.describe Checkers::Game do
       end
 
       context 'that is on the left edge,' do
-        let(:target_piece_position) { Checkers::Movement::Position.new(0, 2) }
+        let(:target_piece_position) { Checkers::Position.new(0, 2) }
   
         it { is_expected.to be_singular }
       end
 
       context 'that is on the right edge,' do
-        let(:target_piece_position) { Checkers::Movement::Position.new(7, 3) }
+        let(:target_piece_position) { Checkers::Position.new(7, 3) }
 
         it { is_expected.to be_singular }
       end
@@ -59,21 +59,21 @@ RSpec.describe Checkers::Game do
       subject { game.moves_for(target_piece) }
 
       context 'that is away from the edge,' do
-        let(:target_piece_position) { Checkers::Movement::Position.new(3, 3) }
+        let(:target_piece_position) { Checkers::Position.new(3, 3) }
 
         it { is_expected.to all(be_below(target_piece_position)) }
         it { is_expected.to all(be_next_to(target_piece_position)) }
         it { is_expected.to be_many }
 
         context 'with a friendly piece blocking the left space,' do
-          let(:blocked_position) { Checkers::Movement::Position.new(2, 2) }
+          let(:blocked_position) { Checkers::Position.new(2, 2) }
           let(:light_pieces) { blocked_position }
 
           it { is_expected.not_to include(blocked_position) }
         end
 
         context 'with a friendly piece blocking the right space,' do
-          let(:blocked_position) { Checkers::Movement::Position.new(4, 2) }
+          let(:blocked_position) { Checkers::Position.new(4, 2) }
           let(:light_pieces) { blocked_position }
 
           it { is_expected.not_to include(blocked_position) }
@@ -81,13 +81,13 @@ RSpec.describe Checkers::Game do
       end
 
       context 'that is on the left edge,' do
-        let(:target_piece_position) { Checkers::Movement::Position.new(0, 2) }
+        let(:target_piece_position) { Checkers::Position.new(0, 2) }
   
         it { is_expected.to be_singular }
       end
       
       context 'that is on the right edge,' do
-        let(:target_piece_position) { Checkers::Movement::Position.new(7, 3) }
+        let(:target_piece_position) { Checkers::Position.new(7, 3) }
   
         it { is_expected.to be_singular }
       end

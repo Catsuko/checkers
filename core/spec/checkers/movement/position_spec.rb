@@ -2,10 +2,10 @@ require 'spec_helper'
 require 'checkers'
 require 'shared_examples/out_of_bounds_examples'
 
-RSpec.describe Checkers::Movement::Position do
+RSpec.describe Checkers::Position do
   let(:x) { 0 }
   let(:y) { 0 }
-  subject { Checkers::Movement::Position.new(x, y) }
+  subject { Checkers::Position.new(x, y) }
 
   # TODO: Would be nice to use a properties based testing style here.
   [-1, 8, 10].each do |n|
@@ -22,9 +22,9 @@ RSpec.describe Checkers::Movement::Position do
 
   # TODO: Rework test so business rules are duplicated here.
   context 'given the position is on the board,' do
-    let(:board_size) { Checkers::Movement::Position::LIMIT }
+    let(:board_size) { Checkers::Position::LIMIT }
     let(:board_coordinates) { (0...board_size.pow(2)).map{ |n| [n % board_size, n / board_size.floor] } }
-    subject { test_coordinates.map{|x, y| Checkers::Movement::Position.new(x, y) } }
+    subject { test_coordinates.map{|x, y| Checkers::Position.new(x, y) } }
 
     context 'given the position is on a light square,' do
       let(:test_coordinates) { board_coordinates.select{|x, y| x.even? == y.odd?} }
@@ -42,8 +42,8 @@ RSpec.describe Checkers::Movement::Position do
   end
 
   context 'given two positions at the same coordinates,' do
-    let(:a) { Checkers::Movement::Position.new(x, y) }
-    let(:b) { Checkers::Movement::Position.new(x, y) }
+    let(:a) { Checkers::Position.new(x, y) }
+    let(:b) { Checkers::Position.new(x, y) }
 
     it 'they are considered equal using ==' do
       expect(a == b).to be true

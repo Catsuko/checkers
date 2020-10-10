@@ -5,7 +5,7 @@ RSpec.describe Checkers::Game do
   describe 'when one piece jumps over another piece,' do
     include_context('game')
 
-    let(:target_piece_position) { Checkers::Movement::Position.new(4, 4) }
+    let(:target_piece_position) { Checkers::Position.new(4, 4) }
     let(:target_piece_color) { :dark }
     let(:light_pieces) { target_piece_position.top_right }
 

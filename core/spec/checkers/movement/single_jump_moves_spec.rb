@@ -11,35 +11,35 @@ RSpec.describe Checkers::Game do
       let(:target_piece_color) { :dark }
 
       context 'with a diagonally adjacent light piece that has a vacant space behind,' do
-        let(:target_piece_position) { Checkers::Movement::Position.new(2, 2) }
+        let(:target_piece_position) { Checkers::Position.new(2, 2) }
         let(:light_pieces) { target_piece_position.top_right }
         
         it { is_expected.to contain_exactly(target_piece_position.top_right.top_right) }
       end
 
       context 'with a diagonally adjacent dark piece that has a vacant space behind,' do
-        let(:target_piece_position) { Checkers::Movement::Position.new(2, 2) }
+        let(:target_piece_position) { Checkers::Position.new(2, 2) }
         let(:dark_pieces) { target_piece_position.top_right }
 
         it { is_expected.to all(be_left_of(target_piece_position)) }
       end
 
       context 'with a diagonally adjacent light piece that is on the left edge,' do
-        let(:target_piece_position) { Checkers::Movement::Position.new(1, 1) }
+        let(:target_piece_position) { Checkers::Position.new(1, 1) }
         let(:light_pieces) { target_piece_position.top_left }
 
         it { is_expected.to all(be_right_of(target_piece_position)) }
       end
 
       context 'with a diagonally adjacent light piece that is on the right edge,' do
-        let(:target_piece_position) { Checkers::Movement::Position.new(6, 0) }
+        let(:target_piece_position) { Checkers::Position.new(6, 0) }
         let(:light_pieces) { target_piece_position.top_right }
 
         it { is_expected.to all(be_left_of(target_piece_position)) }
       end
       
       context 'with a diagonally adjacent light piece that is on the top edge,' do
-        let(:target_piece_position) { Checkers::Movement::Position.new(0, 6) }
+        let(:target_piece_position) { Checkers::Position.new(0, 6) }
         let(:light_pieces) { target_piece_position.top_right }
 
         it { is_expected.not_to be_any }
@@ -50,35 +50,35 @@ RSpec.describe Checkers::Game do
       let(:target_piece_color) { :light }
 
       context 'with a diagonally adjacent dark piece that has a vacant space behind,' do
-        let(:target_piece_position) { Checkers::Movement::Position.new(2, 2) }
+        let(:target_piece_position) { Checkers::Position.new(2, 2) }
         let(:dark_pieces) { target_piece_position.bottom_right }
         
         it { is_expected.to contain_exactly(target_piece_position.bottom_right.bottom_right) }
       end
 
       context 'with a diagonally adjacent light piece that has a vacant space behind,' do
-        let(:target_piece_position) { Checkers::Movement::Position.new(2, 2) }
+        let(:target_piece_position) { Checkers::Position.new(2, 2) }
         let(:light_pieces) { target_piece_position.bottom_right }
 
         it { is_expected.to all(be_left_of(target_piece_position)) }
       end
 
       context 'with a diagonally adjacent dark piece that is on the left edge,' do
-        let(:target_piece_position) { Checkers::Movement::Position.new(1, 3) }
+        let(:target_piece_position) { Checkers::Position.new(1, 3) }
         let(:dark_pieces) { target_piece_position.bottom_left }
 
         it { is_expected.to all(be_right_of(target_piece_position)) }
       end
 
       context 'with a diagonally adjacent dark piece that is on the right edge,' do
-        let(:target_piece_position) { Checkers::Movement::Position.new(6, 2) }
+        let(:target_piece_position) { Checkers::Position.new(6, 2) }
         let(:dark_pieces) { target_piece_position.bottom_right }
 
         it { is_expected.to all(be_left_of(target_piece_position)) }
       end
 
       context 'with a diagonally adjacent dark piece that is on the bottom edge,' do
-        let(:target_piece_position) { Checkers::Movement::Position.new(7, 1) }
+        let(:target_piece_position) { Checkers::Position.new(7, 1) }
         let(:dark_pieces) { target_piece_position.bottom_left }
 
         it { is_expected.not_to be_any }
@@ -87,8 +87,8 @@ RSpec.describe Checkers::Game do
 
     context 'given another friendly piece exists with a possible jump,' do
       let(:target_piece_color) { :dark }
-      let(:position_with_jump) { Checkers::Movement::Position.new(2, 2) }
-      let(:target_piece_position) { Checkers::Movement::Position.new(0, 0) }
+      let(:position_with_jump) { Checkers::Position.new(2, 2) }
+      let(:target_piece_position) { Checkers::Position.new(0, 0) }
       let(:light_pieces) { position_with_jump.top_right }
       let(:dark_pieces) { position_with_jump }
 

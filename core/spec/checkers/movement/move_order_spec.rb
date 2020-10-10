@@ -6,7 +6,7 @@ require 'support/shared_contexts/game_context'
 RSpec.describe Checkers::Game do
   describe 'when taking turns to move pieces,' do
     include_context('game')
-    let(:target_piece_position) { Checkers::Movement::Position.new(4, 4) }
+    let(:target_piece_position) { Checkers::Position.new(4, 4) }
 
     (1..5).each do |n|
       context "given a #{n.even? ? 'dark' : 'light'} is being moved and it is turn #{n}," do

@@ -24,20 +24,20 @@ RSpec.describe Checkers::Game do
     include_context('game')
 
     context 'given the first player can make a move on their turn,' do
-      let(:dark_pieces) { Checkers::Movement::Position.new(1, 1) }
+      let(:dark_pieces) { Checkers::Position.new(1, 1) }
 
       include_examples 'game is not finished'
     end
 
     context 'given the second player can make a move on their turn,' do
       let(:turn) { Checkers::Turn.new(first_player: first_player, second_player: second_player).next }
-      let(:light_pieces) { Checkers::Movement::Position.new(5, 5) }
+      let(:light_pieces) { Checkers::Position.new(5, 5) }
 
       include_examples 'game is not finished'
     end
 
     context 'given the first player cannot make a move on their turn,' do
-      let(:dark_pieces) { Checkers::Movement::Position.new(7, 7) }
+      let(:dark_pieces) { Checkers::Position.new(7, 7) }
 
       include_examples 'game is finished'
 
@@ -52,7 +52,7 @@ RSpec.describe Checkers::Game do
 
     context 'given the second player cannot make a move on their turn,' do
       let(:turn) { Checkers::Turn.new(first_player: first_player, second_player: second_player).next }
-      let(:light_pieces) { Checkers::Movement::Position.new(0, 0) }
+      let(:light_pieces) { Checkers::Position.new(0, 0) }
 
       include_examples 'game is finished'
 

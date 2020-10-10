@@ -1,5 +1,6 @@
 require_relative './movement/out_of_turn'
 require_relative './movement/moves'
+require_relative './out_of_bounds'
 
 module Checkers
   class Game

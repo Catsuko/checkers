@@ -8,7 +8,7 @@ RSpec.describe Checkers::Game do
     include_context('game')
 
     let(:target_piece_color) { :dark }
-    let(:target_piece_position) { Checkers::Movement::Position.new(0, 0) }
+    let(:target_piece_position) { Checkers::Position.new(0, 0) }
 
     subject { game.move(target_piece, to: move_position) }
 
