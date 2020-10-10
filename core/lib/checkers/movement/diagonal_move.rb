@@ -16,13 +16,14 @@ module Checkers
       end
 
       def from(position, game:)
-        yield continue_from(position) unless horizontal_edge?(position) || game.space_occupied?(continue_from(position))
+        yield continue_from(position) unless horizontal_edge?(position) || vertical_edge?(position) || game.space_occupied?(continue_from(position))
       end
 
       private
 
       def room_to_jump?(position)
         !horizontal_edge?(position) &&
+          !vertical_edge?(position) &&
           !horizontal_edge?(continue_from(position)) &&
           !vertical_edge?(continue_from(position))
       end

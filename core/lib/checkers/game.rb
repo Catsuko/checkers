@@ -31,7 +31,14 @@ module Checkers
 
     def current_player
       @turn.current_player
-    end 
+    end
+
+    def finished?
+      current_turn_pieces = @pieces.keys.select{ |piece| piece.own?(@turn) }
+      current_turn_pieces.all?{ |piece| gather_moves_for(piece).none? }.tap do |is_finished|
+        yield(@turn.waiting_player, @turn.current_player) if block_given? && is_finished
+      end
+    end
 
     def inspect
       "<Checkers::Game #{@turn.inspect}>"
