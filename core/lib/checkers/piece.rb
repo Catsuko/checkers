@@ -52,5 +52,9 @@ module Checkers
     def own?(turn)
       turn.even? == @light
     end
+
+    def to_s
+      "##{@id} #{light? ? 'Light' : 'Dark'} Piece"
+    end
   end
 end
