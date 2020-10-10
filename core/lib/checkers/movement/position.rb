@@ -97,6 +97,14 @@ module Checkers
         position.evaluate_x{ |x| x - @x }.abs + position.evaluate_y{ |y| y - @y }.abs
       end
 
+      # (0, 0) => (1, 0) => (1, 0)
+
+      def move_towards(other)
+        x_dir = other.evaluate_x{|x| x - @x } <=> 0
+        y_dir = other.evaluate_y{|y| y - @y } <=> 0
+        Position.new(@x + x_dir, @y + y_dir)
+      end
+
       def evaluate_x(&block)
         yield(@x)
       end

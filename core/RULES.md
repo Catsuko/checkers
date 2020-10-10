@@ -8,7 +8,7 @@
 - **The player loses the game when they cannot move on their turn**
 - **Each turn the player can move one piece diagonally forward (away from their edge) one square if the square is vacant**
 - **A player can also move by jumping over an opponent's piece to the square diagonally past it if it is vacant.**
-- Pieces that are jumped over are removed from the game
+- **Pieces that are jumped over are removed from the game**
 - **A player can never jump over their own pieces**
 - A player may perform consecutive jumps in one turn with the same piece
 - The turn is over when the piece cannot jump anymore

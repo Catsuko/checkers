@@ -15,7 +15,10 @@ module Checkers
       raise Checkers::Movement::OutOfTurn unless by == @turn.current_player
       raise Checkers::Movement::OutOfTurn unless piece.own?(@turn)
 
-      Game.new(@pieces.merge({ piece => to }), turn: @turn.next)
+      origin = @pieces[piece]
+      pieces_after_move = @pieces.merge({ piece => to })
+      space_occupied?(to.move_towards(origin)) { |jumped_piece| pieces_after_move.delete(jumped_piece) } unless origin.next_to?(to)
+      Game.new(pieces_after_move, turn: @turn.next)
     end
 
     def moves_for(piece)
