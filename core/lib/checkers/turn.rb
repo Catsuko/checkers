@@ -21,7 +21,7 @@ module Checkers
     end
 
     def even?
-      @number % 2 == 0
+      @number.even?
     end
     
     def inspect

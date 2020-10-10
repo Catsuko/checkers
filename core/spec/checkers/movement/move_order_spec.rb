@@ -9,7 +9,7 @@ RSpec.describe Checkers::Game do
     let(:target_piece_position) { Checkers::Movement::Position.new(4, 4) }
 
     (1..5).each do |n|
-      context "given the player is going #{n % 2 == 0 ? 'first' : 'second'} and it is turn #{n}," do
+      context "given the player is going #{n.even? ? 'first' : 'second'} and it is turn #{n}," do
         let(:turn_number) { n }
         let(:target_piece_color) { turn.even? ? :dark : :light }
         let(:move_position) { turn.even? ? target_piece_position.top_right : target_piece_position.bottom_right }
