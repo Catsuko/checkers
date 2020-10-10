@@ -10,7 +10,7 @@ RSpec.describe Checkers::Game do
     let(:target_piece_color) { :dark }
     let(:target_piece_position) { Checkers::Movement::Position.new(0, 0) }
 
-    subject { game.move(target_piece, to: move_position, by: first_player) }
+    subject { game.move(target_piece, to: move_position) }
 
     context 'given the position to move to is an available move,' do
       let(:move_position) { target_piece_position.top_right }

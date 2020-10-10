@@ -9,13 +9,13 @@ RSpec.describe Checkers::Game do
     let(:target_piece_position) { Checkers::Movement::Position.new(4, 4) }
 
     (1..5).each do |n|
-      context "given the player is going #{n.even? ? 'first' : 'second'} and it is turn #{n}," do
+      context "given a #{n.even? ? 'dark' : 'light'} is being moved and it is turn #{n}," do
         let(:turn_number) { n }
         let(:target_piece_color) { turn.even? ? :dark : :light }
         let(:move_position) { turn.even? ? target_piece_position.top_right : target_piece_position.bottom_right }
 
         it 'an Out of Turn error is raised' do 
-          expect{ game.move(target_piece, to: move_position, by: turn.waiting_player) }.to raise_error(Checkers::Movement::OutOfTurn)
+          expect{ game.move(target_piece, to: move_position) }.to raise_error(Checkers::Movement::OutOfTurn)
         end
       end
     end

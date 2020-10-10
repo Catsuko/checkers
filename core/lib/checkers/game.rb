@@ -8,11 +8,9 @@ module Checkers
       @turn = turn
     end
  
-    def move(piece, to:, by:)
+    def move(piece, to:)
       raise Checkers::Movement::IllegalMove, "#{piece} is not part of the game." unless @pieces.key?(piece)
-      raise Checkers::Movement::IllegalMove, "#{by} does not have permission to move #{piece}." if by == @turn.current_player && !piece.own?(@turn)
       raise Checkers::Movement::IllegalMove, "#{piece} at #{@pieces[piece]} cannot move to #{to}." unless moves_for(piece).include?(to)
-      raise Checkers::Movement::OutOfTurn unless by == @turn.current_player
       raise Checkers::Movement::OutOfTurn unless piece.own?(@turn)
 
       origin = @pieces[piece]
