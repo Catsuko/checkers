@@ -14,10 +14,7 @@ module Checkers
       raise Checkers::Movement::IllegalMove, "#{piece} at #{@pieces[piece]} cannot move to #{to}." unless moves_for(piece).include?(to)
       raise Checkers::Movement::OutOfTurn unless piece.own?(@turn)
 
-      origin = @pieces[piece]
-      pieces_after_move = @pieces.merge({ piece => to })
-      space_occupied?(to.move_towards(origin)) { |jumped_piece| pieces_after_move.delete(jumped_piece) } unless origin.next_to?(to)
-      Game.new(pieces_after_move, turn: @turn.next)
+      Game.new(pieces_after_moving(piece, to: to), turn: can_jump?(piece, from: to) ? @turn : @turn.next)
     end
 
     def moves_for(piece)
@@ -47,6 +44,19 @@ module Checkers
     end
 
     private
+
+    def can_jump?(piece, from:)
+      piece.jumps_from(from, game: self).any?
+    end 
+
+    def pieces_after_moving(piece, to:)
+      origin = @pieces[piece]
+      @pieces.merge({ piece => to }).tap do |pieces|
+        unless(origin.next_to?(to))
+          space_occupied?(to.move_towards(origin)) {|jumped_piece| pieces.delete(jumped_piece) }
+        end
+      end
+    end
 
     def gather_moves_for(piece)
       jumps = piece.jumps_from(@pieces[piece], game: self)
