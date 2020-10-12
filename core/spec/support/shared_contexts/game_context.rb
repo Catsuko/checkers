@@ -10,15 +10,18 @@ RSpec.shared_context 'game' do
   let(:target_piece_color) { nil }
   let(:piece_factory) { Checkers::PieceFactory.new }
   let(:target_piece) { piece_factory.send(:"create_#{target_piece_color}_piece", 'target') unless target_piece_color.nil? }
+  let(:pieces) do
+    {}.tap do |pieces_lookup|
+      pieces_lookup.store(target_piece, target_piece_position) unless target_piece_position.nil?
+      [light_pieces].flatten.each_with_index do |pos, i|
+        pieces_lookup.store(piece_factory.create_light_piece(i.next), pos)
+      end
+      [dark_pieces].flatten.each_with_index do |pos, i|
+        pieces_lookup.store(piece_factory.create_dark_piece(-i.next), pos)
+      end
+    end
+  end
   let(:game) do
-    pieces = {}
-    pieces.store(target_piece, target_piece_position) unless target_piece_position.nil?
-    [light_pieces].flatten.each_with_index do |pos, i|
-      pieces.store(piece_factory.create_light_piece(i.next), pos)
-    end
-    [dark_pieces].flatten.each_with_index do |pos, i|
-      pieces.store(piece_factory.create_dark_piece(-i.next), pos)
-    end
     Checkers::Game.new(pieces, turn: turn)
   end
 end

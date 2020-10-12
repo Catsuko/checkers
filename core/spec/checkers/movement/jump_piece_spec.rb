@@ -9,12 +9,20 @@ RSpec.describe Checkers::Game do
     let(:target_piece_color) { :dark }
     let(:target_piece_position) { Checkers::Position.new(0, 0) }
 
+    subject { game.move(target_piece, to: target_piece_position.top_right.top_right) }
+
     context 'given a second jump can be made afterwards,' do
-      let(:light_pieces) { [target_piece_position.top_right, target_piece_position.top_right.top_right.top_right] }
+      let(:other_jump_position) { Checkers::Position.new(6, 0) }
+      let(:light_pieces) { [target_piece_position.top_right, target_piece_position.top_right.top_right.top_right, other_jump_position.top_left] }
+      let(:dark_pieces) { other_jump_position }
 
       it 'the turn is not passed to the other player' do
-        after_jump = game.move(target_piece, to: target_piece_position.top_right.top_right)
-        expect(after_jump.current_player).to eq game.current_player
+        expect(subject.current_player).to eq game.current_player
+      end
+
+      it 'a different friendly piece with a jump available cannot move' do
+        other_piece = pieces.invert.fetch(other_jump_position)
+        expect(subject.moves_for(other_piece)).to contain_exactly
       end
     end
 
@@ -22,8 +30,7 @@ RSpec.describe Checkers::Game do
       let(:light_pieces) { target_piece_position.top_right }
 
       it 'the turn is passed to the other player' do
-        after_jump = game.move(target_piece, to: target_piece_position.top_right.top_right)
-        expect(after_jump.current_player).not_to eq game.current_player
+        expect(subject.current_player).not_to eq game.current_player
       end
     end
   end

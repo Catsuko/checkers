@@ -4,9 +4,10 @@ require_relative './out_of_bounds'
 
 module Checkers
   class Game
-    def initialize(pieces={}, turn:)
+    def initialize(pieces = {}, turn:, jumping_piece: nil)
       @pieces = pieces
       @turn = turn
+      @jumping_piece = jumping_piece
     end
  
     def move(piece, to:)
@@ -14,11 +15,16 @@ module Checkers
       raise Checkers::Movement::IllegalMove, "#{piece} at #{@pieces[piece]} cannot move to #{to}." unless moves_for(piece).include?(to)
       raise Checkers::Movement::OutOfTurn unless piece.own?(@turn)
 
-      Game.new(pieces_after_moving(piece, to: to), turn: can_jump?(piece, from: to) ? @turn : @turn.next)
+      if can_jump?(piece, from: to)
+        Game.new(pieces_after_moving(piece, to: to), turn: @turn, jumping_piece: piece)
+      else
+        Game.new(pieces_after_moving(piece, to: to), turn: @turn.next)
+      end
     end
 
     def moves_for(piece)
-      Checkers::Movement::Moves.new(@pieces.key?(piece) ? gather_moves_for(piece) : [])
+      can_be_moved = @pieces.key?(piece) && (@jumping_piece.nil? || piece == @jumping_piece)
+      Checkers::Movement::Moves.new(can_be_moved ? gather_moves_for(piece) : [])
     end
 
     def space_occupied?(position)
