@@ -1,27 +1,31 @@
-name: Test Coverage
+name: build
 
 on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
-    - name: Set up Ruby 2.6
+
+    - name: Install Ruby (2.6)
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.6.x
-    - name: Build and test with Rake
+
+    - name: Setup Code Climate test-reporter
+      run: |
+        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        chmod +x ./cc-test-reporter
+        ./cc-test-reporter before-build
+    - name: Build and test with RSpec
       run: |
         cd core
-        gem install bundler -v '1.17.3'
+        gem install bundler
         bundle install --jobs 4 --retry 3
         bundle exec rspec
-    - name: Test & publish code coverage
-      uses: paambaati/codeclimate-action@v2.7.4
-      env:
-        CC_TEST_REPORTER_ID: 8e86de4190317863cdbeceeb8bcf0ea5b2a9181bbe54f3165b251414794442af
-      with:
-        workingDirectory:   ${{github.workspace}}/core
+    - name: Publish code coverage
+      run: |
+        export GIT_BRANCH="${GITHUB_REF/refs\/heads\//}"
+        ./cc-test-reporter after-build -r 8e86de4190317863cdbeceeb8bcf0ea5b2a9181bbe54f3165b251414794442af
