@@ -1,4 +1,4 @@
-name: RSpec with SimpleCov for a Gem
+name: Test Coverage
 
 on: [push]
 
@@ -15,6 +15,7 @@ jobs:
         ruby-version: 2.6.x
     - name: Build and test with Rake
       run: |
+        cd core
         gem install bundler -v '1.17.3'
         bundle install --jobs 4 --retry 3
         bundle exec rspec
