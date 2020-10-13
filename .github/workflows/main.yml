@@ -23,3 +23,5 @@ jobs:
       uses: paambaati/codeclimate-action@v2.7.4
       env:
         CC_TEST_REPORTER_ID: 8e86de4190317863cdbeceeb8bcf0ea5b2a9181bbe54f3165b251414794442af
+      with:
+        workingDirectory:   ${{github.workspace}}/core
