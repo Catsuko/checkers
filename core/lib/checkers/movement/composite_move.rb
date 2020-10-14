@@ -5,6 +5,10 @@ module Checkers
         @moves = moves
       end
 
+      def with_opposites
+        CompositeMove.new(@moves + @moves.map(&:opposite))
+      end
+
       def jumps_for(piece, position:, game:, &block)
         self.tap do
           @moves.each do |move|

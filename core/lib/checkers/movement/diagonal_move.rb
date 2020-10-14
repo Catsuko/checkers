@@ -6,6 +6,13 @@ module Checkers
         @y_dir = y_dir
       end
 
+      def opposite
+        DiagonalMove.new(
+          x_dir: @x_dir == :left ? :right : :left,
+          y_dir: @y_dir == :top ? :bottom : top
+        )
+      end
+
       def jumps_for(piece, position:, game:)
         return unless room_to_jump?(position)
         

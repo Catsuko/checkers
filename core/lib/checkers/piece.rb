@@ -1,12 +1,13 @@
-require_relative './movement/diagonal_move'
-require_relative './movement/composite_move'
-
 module Checkers
   class Piece
     def initialize(id, light:, movement:)
       @id = id
       @light = light
       @movement = movement
+    end
+
+    def promote
+      Piece.new(@id, light: @light, movement: @movement.with_opposites)
     end
 
     def jumps_from(position, game:)
