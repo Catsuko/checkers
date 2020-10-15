@@ -14,7 +14,7 @@
 - **The turn is over when the piece cannot jump anymore**
 - **Once a piece begins jumping, no moves can be made for other pieces until all jumps are finished**
 - **If a jump move is possible the player must make that move, if multiple are possible the the player can pick which to do**
-- When a single piece reaches the other edge of the board, the piece becomes a king
-- When a piece beocmes a king, the turn ends
+- **When a single piece reaches the other edge of the board, the piece becomes a king**
+- When a piece becomes a king, the turn ends
 - **king pieces can move diagonally backwards in addition to normal moves**
 - **king pieces can jump diagonally backwards in addition to normal jumps**

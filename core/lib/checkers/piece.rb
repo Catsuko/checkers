@@ -1,13 +1,14 @@
 module Checkers
   class Piece
-    def initialize(id, light:, movement:)
+    def initialize(id, light:, movement:, is_king: false)
       @id = id
       @light = light
       @movement = movement
+      @is_king = is_king
     end
 
     def promote
-      Piece.new(@id, light: @light, movement: @movement.with_opposites)
+      Piece.new(@id, light: @light, movement: @movement.with_opposites, is_king: true)
     end
 
     def jumps_from(position, game:)
@@ -24,6 +25,10 @@ module Checkers
           moves << move
         end
       end
+    end
+
+    def king?
+      @is_king
     end
 
     def has_id?(id)

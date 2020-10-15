@@ -9,7 +9,7 @@ module Checkers
       def opposite
         DiagonalMove.new(
           x_dir: @x_dir == :left ? :right : :left,
-          y_dir: @y_dir == :top ? :bottom : top
+          y_dir: @y_dir == :top ? :bottom : :top
         )
       end
 

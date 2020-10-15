@@ -58,10 +58,18 @@ module Checkers
     def pieces_after_moving(piece, to:)
       origin = @pieces[piece]
       @pieces.merge({ piece => to }).tap do |pieces|
-        unless(origin.next_to?(to))
-          space_occupied?(to.move_towards(origin)) {|jumped_piece| pieces.delete(jumped_piece) }
-        end
+        promote_piece(piece, pieces: pieces, position: to) unless piece.king? || (!to.top_edge? && !to.bottom_edge?)
+        removed_jumped_pieces(start: origin, finish: to, pieces: pieces) unless origin.next_to?(to)
       end
+    end
+
+    def promote_piece(piece, pieces:, position:)
+      pieces.delete(piece)
+      pieces.store(piece.promote, position)
+    end
+
+    def removed_jumped_pieces(start:, finish:, pieces:)
+      space_occupied?(finish.move_towards(start)) {|jumped_piece| pieces.delete(jumped_piece) }
     end
 
     def gather_moves_for(piece)
