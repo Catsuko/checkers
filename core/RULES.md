@@ -17,4 +17,4 @@
 - When a single piece reaches the other edge of the board, the piece becomes a king
 - When a piece beocmes a king, the turn ends
 - **king pieces can move diagonally backwards in addition to normal moves**
-- king pieces can jump diagonally backwards in addition to normal jumps
+- **king pieces can jump diagonally backwards in addition to normal jumps**
