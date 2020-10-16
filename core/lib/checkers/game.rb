@@ -29,9 +29,7 @@ module Checkers
 
     def space_occupied?(position)
       positions = @pieces.invert
-      positions.key?(position).tap do |is_occupied|
-        yield(positions.fetch(position)) if block_given? && is_occupied
-      end
+      positions.key?(position) && (!block_given? || yield(positions.fetch(position)))
     end
 
     def current_player

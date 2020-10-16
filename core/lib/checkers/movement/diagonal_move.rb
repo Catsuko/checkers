@@ -15,18 +15,28 @@ module Checkers
 
       def jumps_for(piece, position:, game:)
         return unless room_to_jump?(position)
-        
+
         jump_position = continue_from(position, count: 2)
-        game.space_occupied?(continue_from(position)) do |other_piece|
-          yield jump_position unless game.space_occupied?(jump_position) || other_piece.friendly?(piece)
-        end
+        return unless vacant?(jump_position, game: game) && jumpable_piece?(continue_from(position), game: game, piece: piece)
+
+        yield jump_position
       end
 
       def from(position, game:)
-        yield continue_from(position) unless horizontal_edge?(position) || vertical_edge?(position) || game.space_occupied?(continue_from(position))
+        return if horizontal_edge?(position) || vertical_edge?(position) || game.space_occupied?(continue_from(position))
+
+        yield continue_from(position)
       end
 
       private
+
+      def vacant?(position, game:)
+        !game.space_occupied?(position)
+      end
+
+      def jumpable_piece?(position, game:, piece:)
+        game.space_occupied?(position) { |other_piece| other_piece.enemy?(piece) }
+      end
 
       def room_to_jump?(position)
         !horizontal_edge?(position) &&

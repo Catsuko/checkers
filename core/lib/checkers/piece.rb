@@ -51,6 +51,10 @@ module Checkers
       light? == other.light?
     end
 
+    def enemy?(other)
+      !friendly?(other)
+    end
+
     def light?
       @light
     end
