@@ -3,7 +3,7 @@
 - **Board is an 8x8 grid of light and dark squares**
 - **Each player has a dark square on the far left and a light square on the far right**
 - **Pieces can only be placed on dark squares**
-- Each player starts with twelve pieces on the twelve closest squares to the player's edge of the board
+- **Each player starts with twelve pieces on the twelve closest squares to the player's edge of the board**
 - **The player with dark pieces moves first**
 - **The player loses the game when they cannot move on their turn**
 - **Each turn the player can move one piece diagonally forward (away from their edge) one square if the square is vacant**
