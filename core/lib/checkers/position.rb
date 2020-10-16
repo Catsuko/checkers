@@ -6,6 +6,7 @@ module Checkers
 
     def initialize(x, y)
       raise OutOfBounds.new(x: x, y: y) unless in_bounds?(x, y) && dark_square?(x, y)
+
       @x = x
       @y = y
     end
@@ -102,11 +103,11 @@ module Checkers
       Position.new(@x + x_dir, @y + y_dir)
     end
 
-    def evaluate_x(&block)
+    def evaluate_x
       yield(@x)
     end
 
-    def evaluate_y(&block)
+    def evaluate_y
       yield(@y)
     end
 
