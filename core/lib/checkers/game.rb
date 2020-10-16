@@ -11,14 +11,13 @@ module Checkers
     end
  
     def move(piece, to:)
-      raise Checkers::Movement::IllegalMove, "#{piece} is not part of the game." unless @pieces.key?(piece)
-      raise Checkers::Movement::IllegalMove, "#{piece} at #{@pieces[piece]} cannot move to #{to}." unless moves_for(piece).include?(to)
-      raise Checkers::Movement::OutOfTurn unless piece.own?(@turn)
+      validate_move(piece, to: to)
+      updated_pieces = pieces_after_moving(piece, to: to)
 
       if can_jump?(piece, from: to)
-        Game.new(pieces_after_moving(piece, to: to), turn: @turn, jumping_piece: piece)
+        Game.new(updated_pieces, turn: @turn, jumping_piece: piece)
       else
-        Game.new(pieces_after_moving(piece, to: to), turn: @turn.next)
+        Game.new(updated_pieces, turn: @turn.next)
       end
     end
 
@@ -48,6 +47,12 @@ module Checkers
     end
 
     private
+
+    def validate_move(piece, to:)
+      raise Checkers::Movement::IllegalMove, "#{piece} is not part of the game." unless @pieces.key?(piece)
+      raise Checkers::Movement::IllegalMove, "#{piece} at #{@pieces[piece]} cannot move to #{to}." unless moves_for(piece).include?(to)
+      raise Checkers::Movement::OutOfTurn unless piece.own?(@turn)
+    end
 
     def can_jump?(piece, from:)
       piece.jumps_from(from, game: self).any?
