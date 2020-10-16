@@ -32,5 +32,16 @@ RSpec.describe Checkers::Game do
         end
       end
     end
+
+    context 'given there is a possible jump above promotion,' do
+      let(:target_piece_color) { :dark }
+      let(:target_piece_position) { Checkers::Position.new(4, 6) }
+      let(:king_position) { target_piece_position.top_left }
+      let(:light_pieces) { king_position.bottom_left }
+
+      it 'the turn is ended after the piece becomes king,' do
+        expect(subject.current_player).to eq second_player
+      end
+    end
   end
 end
