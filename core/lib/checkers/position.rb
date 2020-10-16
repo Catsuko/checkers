@@ -93,10 +93,6 @@ module Checkers
       x_distance + y_distance > 0 && x_distance <= 1 && y_distance <= 1
     end
 
-    def distance_from(position)
-      position.evaluate_x{ |x| x - @x }.abs + position.evaluate_y{ |y| y - @y }.abs
-    end
-
     def move_towards(other)
       x_dir = other.evaluate_x{|x| x - @x } <=> 0
       y_dir = other.evaluate_y{|y| y - @y } <=> 0
