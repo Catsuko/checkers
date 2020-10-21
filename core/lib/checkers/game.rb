@@ -46,6 +46,13 @@ module Checkers
       "<Checkers::Game #{@turn.inspect}>"
     end
 
+    def to_h
+      {
+        turn: @turn.to_h,
+        pieces: @pieces.reduce({}) { |hash, (k, v)| hash.merge({ v.hash => k.to_h }) }
+      }
+    end
+
     private
 
     def validate_move(piece, to:)

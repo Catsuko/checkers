@@ -27,5 +27,9 @@ module Checkers
     def inspect
       "<Turn #{@number}>"
     end
+
+    def to_h
+      { number: @number }
+    end
   end
 end

@@ -66,5 +66,13 @@ module Checkers
     def to_s
       "##{@id} #{light? ? 'Light' : 'Dark'} Piece"
     end
+
+    def to_h
+      {
+        id: @id,
+        light: @light,
+        is_king: @is_king
+      }
+    end
   end
 end
