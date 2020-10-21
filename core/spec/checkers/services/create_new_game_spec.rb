@@ -22,7 +22,7 @@ RSpec.describe Checkers::Services::CreateNewGame do
     let(:second_player_id) { 2 }
     let(:game_id) { 512 }
 
-    before(:each) do 
+    before(:each) do
       allow(repository).to receive(:generate_id).and_return(game_id)
       subject
     end
