@@ -6,7 +6,7 @@ module Checkers
     end
 
     def inspect
-      "<Checkers::OutOfBoundsBounds: #{@x}, #{@y}>"
+      "<Checkers::OutOfBounds: #{@x}, #{@y}>"
     end
 
     def to_s

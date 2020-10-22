@@ -14,6 +14,7 @@ module Checkers
       validate_move(piece, to: to)
       updated_pieces = pieces_after_moving(piece, to: to)
 
+      # TODO: There is a bug here where if a piece moves to a place with a jump, they can move again
       if can_jump?(piece, from: to)
         Game.new(updated_pieces, turn: @turn, jumping_piece: piece)
       else
@@ -49,7 +50,8 @@ module Checkers
     def to_h
       {
         turn: @turn.to_h,
-        pieces: @pieces.reduce({}) { |hash, (k, v)| hash.merge({ v.hash => k.to_h }) }
+        pieces: @pieces.reduce({}) { |hash, (k, v)| hash.merge({ v.hash => k.to_h }) },
+        jumping_piece: @jumping_piece
       }
     end
 
