@@ -64,7 +64,7 @@ module Checkers
     end
 
     def to_s
-      "##{@id} #{light? ? 'Light' : 'Dark'} Piece"
+      "#{light? ? 'Light' : 'Dark'} Piece (id: #{@id})"
     end
 
     def to_h

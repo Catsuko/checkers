@@ -12,6 +12,12 @@ module Checkers
       Piece.new(id, light: false, movement: dark_movement)
     end
 
+    def create_from(piece_attributes)
+      factory_method = piece_attributes.fetch(:light, false) ? :create_light_piece : :create_dark_piece
+      piece = send(factory_method, piece_attributes.fetch(:id, nil))
+      piece_attributes.fetch(:is_king, false) ? piece.promote : piece
+    end
+
     private
 
     def light_movement

@@ -1,6 +1,5 @@
 require 'spec_helper'
 require 'checkers/services/create_new_game'
-require 'checkers/game_factory'
 
 RSpec.describe Checkers::Services::CreateNewGame do
   let(:listener) { spy('listener') }

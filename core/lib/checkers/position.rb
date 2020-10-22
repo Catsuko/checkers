@@ -94,5 +94,9 @@ module Checkers
       y_dir = other.y - y <=> 0
       Position.new(x + x_dir, y + y_dir)
     end
+
+    def self.from_index(i)
+      Position.new(i % LIMIT, (i / LIMIT).floor)
+    end
   end
 end

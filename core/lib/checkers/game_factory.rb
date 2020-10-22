@@ -2,6 +2,7 @@ require_relative 'piece_factory'
 require_relative 'game'
 require_relative 'turn'
 require_relative 'position'
+require_relative 'player'
 
 module Checkers
   class GameFactory
@@ -9,10 +10,32 @@ module Checkers
       Game.new(fresh_pieces, turn: first_turn(first_player, second_player))
     end
 
+    def create_from(attributes)
+      Game.new(
+        pieces_from(attributes),
+        turn: turn_from(attributes),
+        jumping_piece: attributes[:jumping_piece]
+      )
+    end
+
     private
+
+    def turn_from(attributes)
+      Turn.new(
+        attributes.fetch(:turn).fetch(:number),
+        first_player: Player.new(attributes.fetch(:first_player_id)),
+        second_player: Player.new(attributes.fetch(:second_player_id))
+      )
+    end 
 
     def first_turn(first_player, second_player)
       Turn.new(first_player: first_player, second_player: second_player)
+    end
+
+    def pieces_from(attributes)
+      attributes.fetch(:pieces).reduce({}) do |pieces, (position, piece)|
+        pieces.merge({ piece_factory.create_from(piece) => Position.from_index(position) })
+      end
     end
 
     def fresh_pieces
