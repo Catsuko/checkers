@@ -24,6 +24,15 @@ RSpec.describe Checkers::Game do
       end
     end
 
+    context 'given the position to move has a possible jump,' do
+      let(:move_position) { target_piece_position.top_right }
+      let(:light_pieces) { move_position.top_right }
+
+      it 'the turn is changed to the next player' do
+        expect(subject.current_player).to eq second_player
+      end
+    end
+
     context 'given the position to move is not an available move,' do
       let(:move_position) { target_piece_position.top_right.top_right.top_right }
 

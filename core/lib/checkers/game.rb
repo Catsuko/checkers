@@ -14,8 +14,7 @@ module Checkers
       validate_move(piece, to: to)
       updated_pieces = pieces_after_moving(piece, to: to)
 
-      # TODO: There is a bug here where if a piece moves to a place with a jump, they can move again
-      if can_jump?(piece, from: to)
+      if can_jump?(piece, from: @pieces[piece]) && can_jump?(piece, from: to)
         Game.new(updated_pieces, turn: @turn, jumping_piece: piece)
       else
         Game.new(updated_pieces, turn: @turn.next)
