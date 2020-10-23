@@ -9,14 +9,18 @@ module Adapters
     end
 
     def play(create_game_command, move_command)
-      create_game_command.('Link', 'Gannondorf')
+      create_game_command.('Green', 'White')
 
       loop do
+        game_state = @repository.get(@game_id)
         begin
-          input = gets.chomp.split(' ').map(&:to_i)
-          next unless input.size == 2
+          id, move, modifier = *gets.chomp.split(' ')
+          piece_details = game_state.fetch(:pieces, {}).invert.detect{ |piece, pos| piece[:id].to_s == id }
+          next unless id && move && piece_details && movement_map.key?(move)
 
-          move_command.(@game_id, *input)
+          move_pos = piece_details.last + movement_map.fetch(move)
+          move_pos += movement_map.fetch(move) if modifier
+          move_command.(@game_id, id.to_i, move_pos)
         rescue StandardError => e
           puts e
         end
@@ -37,6 +41,15 @@ module Adapters
     end
 
     private
+
+    def movement_map
+      @movement_map ||= {
+        'se' => 9,
+        'sw' => 7,
+        'ne' => -7,
+        'nw' => -9
+      }
+    end
 
     # TODO: Clean this hell up
     def render_game(game_state)
