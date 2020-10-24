@@ -4,12 +4,13 @@ require 'stringio'
 module Adapters
   # TODO: Separate views and input from game loop
   class ConsoleGame
-    def initialize(repository)
+    def initialize(repository, input)
       @repository = repository
+      @input = input
     end
 
     def play(create_game_command, move_command)
-      create_game_command.('Green', 'White')
+      create_game_command.(*@input.player_names)
 
       loop do
         game_state = @repository.get(@game_id)
