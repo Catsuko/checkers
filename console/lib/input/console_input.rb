@@ -20,7 +20,7 @@ module Input
     end
 
     def select_move_position(from)
-      puts "Where do you want to move? #{movement_map.keys.join(' ')}"
+      puts "Where do you want to move? (#{movement_map.keys.join(' | ')})"
       from + movement_map.fetch(gets.chomp)
     end
 
