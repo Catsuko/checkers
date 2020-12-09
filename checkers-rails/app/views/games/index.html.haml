@@ -1,0 +1,6 @@
+= link_to('New Game', new_game_path)
+%hr
+%ul
+  - @games.each do |game|
+    %li
+      = "#{game.first_player} VS #{game.second_player}"
