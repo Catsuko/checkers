@@ -50,7 +50,7 @@ module Checkers
       {
         turn: @turn.to_h,
         pieces: @pieces.reduce({}) { |hash, (k, v)| hash.merge({ v.hash => k.to_h }) },
-        jumping_piece: @jumping_piece
+        jumping_piece: @jumping_piece&.to_h
       }
     end
 

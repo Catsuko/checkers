@@ -1,0 +1,6 @@
+%h3.mt4.mh4
+  = "Turn #{@game.turn.number} - #{@game.first_player.nickname} vs #{@game.second_player.nickname}"
+%hr.ma4
+
+.center.mw6.w-100
+  = react_component('Board', squares: @game.squares, movePath: game_path(@game))

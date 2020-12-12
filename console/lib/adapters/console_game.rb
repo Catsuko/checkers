@@ -1,5 +1,6 @@
 require 'colorize'
 require 'stringio'
+require 'byebug'
 
 module Adapters
   # TODO: Separate views and input from game loop

@@ -11,10 +11,11 @@ module Checkers
     end
 
     def create_from(attributes)
+      jumping_piece_attributes = attributes[:pieces].values.detect { |piece| piece[:id] == attributes[:jumping_piece] }
       Game.new(
         pieces_from(attributes),
         turn: turn_from(attributes),
-        jumping_piece: attributes[:jumping_piece]
+        jumping_piece: jumping_piece_attributes.nil? ? nil : piece_factory.create_from(jumping_piece_attributes)
       )
     end
 

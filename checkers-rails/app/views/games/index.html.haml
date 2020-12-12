@@ -3,4 +3,4 @@
 %ul
   - @games.each do |game|
     %li
-      = "#{game.first_player} VS #{game.second_player}"
+      = link_to("#{game.first_player} VS #{game.second_player}", edit_game_path(game))
