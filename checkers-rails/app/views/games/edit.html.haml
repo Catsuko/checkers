@@ -3,4 +3,5 @@
 %hr.ma4
 
 .center.mw6.w-100
-  = react_component('Board', squares: @game.squares, movePath: game_path(@game))
+  = form_with(model: @game, local: true) do
+    = react_component('Board', squares: @game.squares, movePath: game_path(@game))

@@ -1,6 +1,4 @@
 class GamesController < ApplicationController
-  skip_before_action :verify_authenticity_token
-
   def index
     @games = Game.all
   end
@@ -12,6 +10,9 @@ class GamesController < ApplicationController
   def update
     command = Checkers::Services::MovePiece.new(self, Game)
     command.call(params.fetch(:id), params.fetch(:piece_id).to_i, params.fetch(:position).to_i)
+  rescue Exception => e
+    flash[:error] = e.message
+    redirect_to(edit_game_path)
   end
 
   def new
@@ -32,6 +33,7 @@ class GamesController < ApplicationController
   end
 
   def handle_piece_moved(piece_id)
+    redirect_to(edit_game_path)
   end
 
   private
