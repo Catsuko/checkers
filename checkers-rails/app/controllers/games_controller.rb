@@ -9,7 +9,7 @@ class GamesController < ApplicationController
 
   def update
     command = Checkers::Services::MovePiece.new(self, Game)
-    command.call(params.fetch(:id), params.fetch(:piece_id).to_i, params.fetch(:position).to_i)
+    command.call(*update_params.values.map(&:to_i))
   rescue Exception => e
     flash[:error] = e.message
     redirect_to(edit_game_path)
@@ -21,6 +21,11 @@ class GamesController < ApplicationController
   def create
     command = Checkers::Services::CreateNewGame.new(self, Game)
     command.call(*create_params.values)
+  end
+
+  def destroy
+    Game.find(params.require(:id)).destroy!
+    redirect_to(games_path)
   end
 
   def handle_game_created(id)

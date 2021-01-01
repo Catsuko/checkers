@@ -1,11 +1,11 @@
 class Game < ApplicationRecord
-  has_one :turn
+  has_one :turn, dependent: :destroy
   belongs_to :jumping_piece, class_name: 'Piece', optional: true
   with_options class_name: 'Player' do
     belongs_to :first_player
     belongs_to :second_player
   end
-  has_many :pieces
+  has_many :pieces, dependent: :delete_all
 
   def self.store(attributes)
     Game.create! do |game|

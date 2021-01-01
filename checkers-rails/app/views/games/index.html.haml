@@ -4,3 +4,5 @@
   - @games.each do |game|
     %li
       = link_to("#{game.first_player} VS #{game.second_player}", edit_game_path(game))
+      = link_to("+", games_path(players: { first_player: game.second_player.nickname, second_player: game.first_player.nickname }), method: :post)
+      = link_to("-", game_path(game), method: :delete)
